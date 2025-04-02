@@ -1,16 +1,12 @@
 "use client";
 
-import LoginForm from "@/components/loginForm";
-import OTPRequestForm from "@/components/otpRequestForm";
-
-import OTPVerifyForm from "@/components/otpVerifyingForm";
-
+import LoginForm from "@/components/auth/loginForm";
 import Image from "next/image";
-import { useState } from "react";
+// import { useState } from "react";
 
 const LoginPage = () => {
-  const [step, setStep] = useState(1);
-  const handleNext = () => setStep((prev) => prev + 1);
+  // const [step, setStep] = useState(1);
+  // const handleNext = () => setStep((prev) => prev + 1);
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gray-100">
@@ -34,9 +30,7 @@ const LoginPage = () => {
           </p>
           {
             <div className="w-full max-w-lg">
-              {step === 1 && <OTPRequestForm onNext={handleNext} />}
-              {step === 2 && <OTPVerifyForm onNext={handleNext} />}
-              {step === 3 && <LoginForm />}
+              <LoginForm />
             </div>
           }
           <a
