@@ -18,6 +18,7 @@ import {
 import { loginUser } from "@/action/auth-action";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth";
+// import { signIn } from "next-auth/react";
 
 const getValidationSchema = (step: "request" | "verify" | "login") => {
   switch (step) {
@@ -44,7 +45,7 @@ const getValidationSchema = (step: "request" | "verify" | "login") => {
 const LoginForm = () => {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
-  const [step, setStep] = useState<"request" | "verify" | "login">("login");
+  const [step, setStep] = useState<"request" | "verify" | "login">("request");
   const [accesstoken, setAccessToken] = useState<string | null>(null);
   const [expiresOn, setExpiresOn] = useState<Date | null>(null);
   const [timeLeft, setTimeLeft] = useState<string | null>(null);
@@ -95,23 +96,21 @@ const LoginForm = () => {
     onError: (error) => alert(error.message),
   });
 
-  // const handleLogin = async (values: {
-  //   user_name: string;
-  //   password: string;
-  // }) => {
-  //   console.log("values", values);
-  //   console.log("accesstoken", accesstoken);
-  //   const result = await signIn("credentials", {
-  //     redirect: false, // Avoid auto-redirect on failure
-  //     user_name: values.user_name,
-  //     password: values.password,
-  //     accesstoken: accesstoken,
-  //   });
+  // const handleLogin = async (values: { password: string }) => {
+  //   try {
+  //     const result = await signIn("credentials", {
+  //       redirect: false,
+  //       accesstoken: accesstoken,
+  //       password: values.password,
+  //     });
 
-  //   if (result?.error) {
-  //     alert("Invalid login: " + result.error);
-  //   } else {
-  //     router.push("/");
+  //     if (result?.error) {
+  //       alert("Invalid login: " + result.error);
+  //     } else {
+  //       router.push("/");
+  //     }
+  //   } catch (error) {
+  //     console.error("Login Error:", error);
   //   }
   // };
   const handleLogin = async (values: {

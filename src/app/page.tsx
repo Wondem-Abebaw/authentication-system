@@ -1,24 +1,16 @@
-"use client";
+import { auth } from "@/lib/auth";
 
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-
-export default function Page() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  console.log("session", session);
-
-  console.log("data", session?.user);
-  // if (status === "loading") return <p>Loading...</p>;
-  // if (status === "unauthenticated") {
-  //   router.push("/login");
-  //   return null;
-  // }
+export default async function HomePage() {
+  const session = await auth();
 
   return (
-    <div className="flex-col space-y-3 flex items-center justify-center pt-8">
-      <h1 className="font-bold text-2xl">Home Page</h1>
-      <h1>Welcome, {session?.user?.name}!</h1>
+    <div>
+      <h1>Welcome {session?.user?.name || "Guest"}</h1>
+      {session ? (
+        <p>Logged in as {session.user.email}</p>
+      ) : (
+        <p>You are not logged in.</p>
+      )}
     </div>
   );
 }

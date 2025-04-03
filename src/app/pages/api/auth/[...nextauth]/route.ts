@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const { auth, handlers, signIn, signOut } = NextAuth({
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -9,9 +9,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         accesstoken: { label: "Access Token", type: "text" },
         password: { label: "PIN", type: "password" },
       },
-
       async authorize(credentials) {
-        console.log("Received Credentials:", credentials);
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
@@ -27,7 +25,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           );
 
           const result = await response.json();
-          console.log("API Response:", result);
+          //   const text = await response.text(); // Read response as text first
+          //   console.log("API Raw Response:", text);
+
+          //   const result = JSON.parse(text);
           if (response.ok && result?.data?.accesstoken) {
             return {
               id: result.data.user_id,
@@ -36,9 +37,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
               role: result.data.user_role,
               accesstoken: result.data.accesstoken,
             };
-          } else {
-            throw new Error(result.message || "Login failed");
           }
+          return null;
         } catch (error) {
           console.error("Auth Error:", error);
           return null;
@@ -48,24 +48,19 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log("Token Before updating JWT:", token);
       if (user) {
         token.id = user.id;
         token.accesstoken = user.accesstoken;
         token.role = user.role;
       }
-      console.log("After updating JWT:", token);
       return token;
     },
     async session({ session, token }) {
-      console.log("Session Before:", session);
-      console.log("Token:", token);
       if (token) {
         session.user.id = token.id;
-        session.user.role = token.role;
         session.accesstoken = token.accesstoken;
+        session.user.role = token.role;
       }
-      console.log("Session After:", session);
       return session;
     },
   },
@@ -74,7 +69,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     error: "/login",
   },
   secret: process.env.AUTH_SECRET,
-  session: {
-    strategy: "jwt",
-  },
 });
+
+export { handler as GET, handler as POST };
