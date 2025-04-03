@@ -18,12 +18,14 @@ import {
 import { loginUser } from "@/action/auth-action";
 import { useRouter } from "next/navigation";
 
-
 const getValidationSchema = (step: "request" | "verify" | "login") => {
   switch (step) {
     case "request":
       return Yup.object({
-        user_name: Yup.string().required("User name  is required"),
+        user_name: Yup.string()
+          .min(4, "User name must be at least 4 characters")
+          .max(25, "User name cannot exceed 25 characters")
+          .required("User name  is required"),
       });
     case "verify":
       return Yup.object({
@@ -34,7 +36,8 @@ const getValidationSchema = (step: "request" | "verify" | "login") => {
     case "login":
       return Yup.object({
         password: Yup.string()
-          //   .matches(/^\d{4,20}$/, "PIN must be 4-20 digits")
+          .min(4, "PIN must be at least 4 characters")
+          .max(25, "PIN cannot exceed 25 characters")
           .required("PIN is required"),
       });
     default:
@@ -102,8 +105,8 @@ const LoginForm = () => {
     startTransition(async () => {
       try {
         const response = await loginUser({
-          password: values.password,
-          accesstoken: accesstoken,
+          password: values?.password ?? "",
+          accesstoken: accesstoken ?? "",
         });
 
         if (!!response?.error) {
@@ -113,8 +116,8 @@ const LoginForm = () => {
         } else {
           router.push("/");
         }
-      } catch (err: any) {
-        toast.error(err.message);
+      } catch (err) {
+        toast.error((err as Error).message);
       }
     });
   };

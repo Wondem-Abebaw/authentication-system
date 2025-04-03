@@ -8,20 +8,20 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="flex-col justify-center min-h-screen p-6">
-      <h1 className="text-2xl font-semibold">Home Page</h1>
-      <h1>
-        Welcome{" "}
-        <span className="font-semibold">{session?.user?.name || ""}</span>
-      </h1>
-      {session ? (
-        <p>
-          Logged in as{" "}
+    <div className="flex  justify-center min-h-screen">
+      <div className="flex-col items-center justify-center p-6">
+        <h1 className="text-2xl font-semibold">Home Page</h1>
+        <h1>
+          Welcome{" "}
+          <span className="font-semibold">{session?.user?.name || ""}</span>
+        </h1>
+        Logged in as{" "}
+        {session ? (
           <span className="font-semibold">{session.user.role}</span>
-        </p>
-      ) : (
-        <p>You are not logged in.</p>
-      )}
+        ) : (
+          <p>You are not logged in.</p>
+        )}
+      </div>
     </div>
   );
 }

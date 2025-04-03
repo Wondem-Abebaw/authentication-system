@@ -2,7 +2,10 @@
 
 import { signIn } from "@/lib/auth";
 
-export const loginUser = async (data: any) => {
+export const loginUser = async (data: {
+  accesstoken: string;
+  password: string;
+}) => {
   try {
     const response = await signIn("credentials", {
       accesstoken: data.accesstoken,

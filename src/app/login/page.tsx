@@ -8,19 +8,22 @@ const LoginPage = () => {
     <div className="flex items-center justify-center w-screen h-screen bg-blue-900">
       <div className="flex flex-col sm:flex-row w-full h-full">
         <div className="bg-blue-900 text-white p-8 w-full sm:w-1/2 flex flex-col justify-center items-center text-center">
-          <h1 className="text-3xl font-bold">Welcome to</h1>
+          <h1 className="text-2xl font-bold">Welcome to</h1>
+          <h1 className="text-3xl font-bold">Dashen Super App Dashboard</h1>
         </div>
 
         <div className="bg-white p-8 w-full sm:w-1/2 flex flex-col justify-center items-center h-full">
           <Image
-            src="/Logo.png"
+            src="/logo.webp"
             alt="Logo"
             width={80}
             height={80}
             className="mb-4"
           />
-          <h2 className="text-2xl font-bold mb-2 text-blue-900">Login</h2>
-          <p className="text-gray-600 mb-4">Welcome</p>
+          <h2 className="text-3xl font-bold mb-2 text-blue-900">Login</h2>
+          <p className="text-blue-950 mb-4">
+            Welcome to dashen bank dashboard!
+          </p>
           <div className="w-full max-w-lg flex flex-col">
             <LoginForm />
             <div className="flex justify-end mt-4">
