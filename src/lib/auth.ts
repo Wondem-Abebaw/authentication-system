@@ -11,7 +11,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       },
 
       async authorize(credentials) {
-        console.log("Received Credentials:", credentials);
+        // console.log("Received Credentials:", credentials);
         try {
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
@@ -27,7 +27,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           );
 
           const result = await response.json();
-          console.log("API Response:", result);
+          // console.log("API Response:", result);
           if (response.ok && result?.data?.accesstoken) {
             return {
               id: result.data.user_id,
@@ -48,24 +48,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      console.log("Token Before updating JWT:", token);
       if (user) {
         token.id = user.id;
         token.accesstoken = user.accesstoken;
         token.role = user.role;
       }
-      console.log("After updating JWT:", token);
+
       return token;
     },
     async session({ session, token }) {
-      console.log("Session Before:", session);
-      console.log("Token:", token);
       if (token) {
-        session.user.id = token.id;
-        session.user.role = token.role;
-        session.accesstoken = token.accesstoken;
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
+        session.accesstoken = token.accesstoken as string;
       }
-      console.log("Session After:", session);
       return session;
     },
   },

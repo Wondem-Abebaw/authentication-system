@@ -7,11 +7,10 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-900">
       <div className="flex flex-col sm:flex-row w-full h-full">
-        {/* First section */}
         <div className="bg-blue-900 text-white p-8 w-full sm:w-1/2 flex flex-col justify-center items-center text-center">
           <h1 className="text-3xl font-bold">Welcome to</h1>
         </div>
-        {/* Second section */}
+
         <div className="bg-white p-8 w-full sm:w-1/2 flex flex-col justify-center items-center h-full">
           <Image
             src="/Logo.png"

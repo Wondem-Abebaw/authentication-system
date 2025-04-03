@@ -17,8 +17,7 @@ import {
 } from "@/components/ui/input-otp";
 import { loginUser } from "@/action/auth-action";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/lib/auth";
-// import { signIn } from "next-auth/react";
+
 
 const getValidationSchema = (step: "request" | "verify" | "login") => {
   switch (step) {
@@ -96,23 +95,6 @@ const LoginForm = () => {
     onError: (error) => alert(error.message),
   });
 
-  // const handleLogin = async (values: { password: string }) => {
-  //   try {
-  //     const result = await signIn("credentials", {
-  //       redirect: false,
-  //       accesstoken: accesstoken,
-  //       password: values.password,
-  //     });
-
-  //     if (result?.error) {
-  //       alert("Invalid login: " + result.error);
-  //     } else {
-  //       router.push("/");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login Error:", error);
-  //   }
-  // };
   const handleLogin = async (values: {
     user_name: string;
     password: string;
